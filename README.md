@@ -1,2 +1,2 @@
 # SystolicArray
-Naive implementation of systolic array
+A naive implementation of systolic array
