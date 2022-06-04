@@ -20,7 +20,7 @@ module verification();
   
   integer iter_cnt;
   
-  wire o_d_a00;
+  wire [W - 1 : 0] o_d_a00;
   // clock generation
   always #(clock_period/2) clk <= ~clk;
   
