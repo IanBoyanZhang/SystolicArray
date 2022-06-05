@@ -9,7 +9,8 @@ module verification();
   localparam FORCED_DELAY = 5;
   localparam clock_period = 10;
   
-  bit clk, reset, en;
+//   bit clk, reset, en;
+  reg clk, reset, en;
   
   localparam W = 32;
   localparam N = 3;
