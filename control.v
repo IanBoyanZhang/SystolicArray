@@ -20,7 +20,7 @@ module control #(
   input  wire [    W * N * N - 1 : 0] i_B,
   output wire [2 * W * N * N - 1 : 0] o_C,
   // debug
-  output wire [2 * W - 1 : 0] o_d_a00
+  output wire [    W - 1 : 0] o_d_a00
 );
   
   reg [2 : 0] states, next_states;
