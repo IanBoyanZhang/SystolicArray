@@ -16,9 +16,10 @@ module control #(
   input  wire                         i_clk,
   input  wire                         i_rst,
   input  wire                         i_en,
+  input  wire                         i_mode,
   input  wire [    W * N * N - 1 : 0] i_A,
   input  wire [    W * N * N - 1 : 0] i_B,
-  output wire [2 * W * N * N - 1 : 0] o_C,
+  output wire [    W * N * N - 1 : 0] o_C,
   // debug
   output wire [    W - 1 : 0] o_d_a00
 );
@@ -29,10 +30,10 @@ module control #(
   wire [W * N - 1 : 0] B_in;
 
 
-  reg [W - 1 : 0] a00, a10, a20;
+  reg  [W - 1 : 0] a00, a10, a20;
   wire [W - 1 : 0] a10_q, a20_q;
 
-  reg [W - 1 : 0] b00, b01, b02;
+  reg  [W - 1 : 0] b00, b01, b02;
   wire [W - 1 : 0] b01_q, b02_q;
 
   assign A_in = {a20_q, a10_q, a00};
@@ -47,10 +48,14 @@ module control #(
       states <= next_states;
     end
   end
+
+  reg sync;
   
   always @(*) begin
     if (next_states == 3'b101) begin
       next_states = 3'b000;
+      // Force to sync after computation
+      sync = 1'b1;
     end else begin
       next_states = states + 1;
     end
@@ -91,8 +96,7 @@ module control #(
     endcase
   end
 
-  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), .i_A(A_in), .i_B(B_in), .o_C(o_C),
-                              
+  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), i_mode(i_mode), .i_sync(sync), .i_A(A_in), .i_B(B_in), .o_C(o_C),
                                .d_a00(o_d_a00)
                               );
 
