@@ -96,7 +96,7 @@ module control #(
     endcase
   end
 
-  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), i_mode(i_mode), .i_sync(sync), .i_A(A_in), .i_B(B_in), .o_C(o_C),
+  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), .i_mode(i_mode), .i_sync(sync), .i_A(A_in), .i_B(B_in), .o_C(o_C),
                                .d_a00(o_d_a00)
                               );
 
