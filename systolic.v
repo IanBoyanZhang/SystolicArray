@@ -15,17 +15,20 @@ module systolic #(
   input  wire                         i_clk,
   input  wire                         i_rst,
   input  wire                         i_en,
+  input  wire                         i_sync,
+  input  wire                         i_mode,
   input  wire [        W * N - 1 : 0] i_A,
   input  wire [        W * N - 1 : 0] i_B,
-  output wire [2 * W * N * N - 1 : 0] o_C,
+  output wire [    W * N * N - 1 : 0] o_C,
   // debug output
   output wire [W - 1 : 0] d_a00
 );
 
-  localparam O_VEC_WIDTH = 2 * W;
+  //localparam O_VEC_WIDTH = 2 * W;
+  localparam O_VEC_WIDTH = W;
 
   // Setup sync bits
-  wire sync = 1'b0;
+  //wire sync = 1'b0;
   // wire en   = 1'b1;
 
   wire [W - 1 : 0] a00, a10, a20, b00, b01, b02;
@@ -42,17 +45,18 @@ module systolic #(
   assign b01 = i_B[1 * W +: W];
   assign b02 = i_B[2 * W +: W];
 
-  PE #(.W(W)) PE00(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(a00),        .i_B(b00), .o_A(pe_a_00_01),.o_B(pe_b_00_10),.o_C(c00));
-  PE #(.W(W)) PE01(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_00_01), .i_B(b01), .o_A(pe_a_01_12),.o_B(pe_b_01_11),.o_C(c01));
-  PE #(.W(W)) PE02(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_01_12), .i_B(b02), .o_A(),          .o_B(pe_b_02_12),.o_C(c02));
+  // How about  
+  PE #(.W(W)) PE00(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(a00),        .i_B(b00), .o_A(pe_a_00_01),.o_B(pe_b_00_10),.o_C(c00));
+  PE #(.W(W)) PE01(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_00_01), .i_B(b01), .o_A(pe_a_01_12),.o_B(pe_b_01_11),.o_C(c01));
+  PE #(.W(W)) PE02(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_01_12), .i_B(b02), .o_A(),          .o_B(pe_b_02_12),.o_C(c02));
 
-  PE #(.W(W)) PE10(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(a10),       .i_B(pe_b_10_20),.o_A(pe_a_10_11),.o_B(pe_b_10_20),.o_C(c10));
-  PE #(.W(W)) PE11(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_10_11),.i_B(pe_b_11_21),.o_A(pe_a_11_12),.o_B(pe_b_11_21),.o_C(c11));
-  PE #(.W(W)) PE12(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_11_12),.i_B(pe_b_12_22),.o_A(),          .o_B(pe_b_12_22),.o_C(c12));
+  PE #(.W(W)) PE10(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(a10),       .i_B(pe_b_10_20),.o_A(pe_a_10_11),.o_B(pe_b_10_20),.o_C(c10));
+  PE #(.W(W)) PE11(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_10_11),.i_B(pe_b_11_21),.o_A(pe_a_11_12),.o_B(pe_b_11_21),.o_C(c11));
+  PE #(.W(W)) PE12(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_11_12),.i_B(pe_b_12_22),.o_A(),          .o_B(pe_b_12_22),.o_C(c12));
 
-  PE #(.W(W)) PE20(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(a20),       .i_B(pe_b_10_20),.o_A(pe_a_20_21),.o_B(),.o_C(c20));
-  PE #(.W(W)) PE21(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_20_21),.i_B(pe_b_11_21),.o_A(pe_a_21_22),.o_B(),.o_C(c21));
-  PE #(.W(W)) PE22(.i_clk(i_clk),.i_rst(i_rst),.i_sync(sync),.i_en(i_en),.i_A(pe_a_21_22),.i_B(pe_b_12_22),.o_A(),          .o_B(),.o_C(c22));
+  PE #(.W(W)) PE20(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(a20),       .i_B(pe_b_10_20),.o_A(pe_a_20_21),.o_B(),.o_C(c20));
+  PE #(.W(W)) PE21(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_20_21),.i_B(pe_b_11_21),.o_A(pe_a_21_22),.o_B(),.o_C(c21));
+  PE #(.W(W)) PE22(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_21_22),.i_B(pe_b_12_22),.o_A(),          .o_B(),.o_C(c22));
 
   
   // https://stackoverflow.com/questions/18067571/indexing-vectors-and-arrays-with
@@ -81,6 +85,6 @@ module systolic #(
   assign o_C[8 * O_VEC_WIDTH +: O_VEC_WIDTH] = c22;
   */
   
-	assign d_a00 = a00;
+  assign d_a00 = a00;
 endmodule
 `endif
