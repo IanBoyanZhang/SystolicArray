@@ -11,6 +11,7 @@ module verification();
   
   //bit clk, reset, en;
   reg clk, reset, en;
+  reg mode;
   
   localparam W = 16;
   localparam N = 3;
@@ -55,7 +56,8 @@ module verification();
         16'h0f0f, 16'h0f0f, 16'h0f0f
     };
 
-    iter_cnt = 0;    
+    iter_cnt = 0;
+    mode = 1;
     #(clock_period);
 
     // clear after one cycle
@@ -99,6 +101,7 @@ module verification();
     .i_clk(clk),
     .i_rst(reset),
     .i_en(en),
+    .i_mode(mode),
     .i_A(A_mat),
     .i_B(B_mat),
     .o_C(C_mat),
