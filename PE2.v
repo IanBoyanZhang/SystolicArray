@@ -28,8 +28,8 @@ module PE #(
   //assign mode = 1;
 
   wire sync_load;
-  assign o_A = i_A;
-  assign o_B = i_B;
+  assign o_A = i_A_buffered;
+  assign o_B = i_B_buffered;
   assign sync_load = i_sync | i_rst | ~i_en;
 
   wire [W - 1 : 0] i_A_buffered;
