@@ -27,10 +27,6 @@ module systolic #(
   //localparam O_VEC_WIDTH = 2 * W;
   localparam O_VEC_WIDTH = W;
 
-  // Setup sync bits
-  //wire sync = 1'b0;
-  // wire en   = 1'b1;
-
   wire [W - 1 : 0] a00, a10, a20, b00, b01, b02;
   wire [W - 1 : 0] pe_a_00_01, pe_a_01_12, pe_a_10_11, pe_a_11_12, pe_a_20_21, pe_a_21_22;
   wire [W - 1 : 0] pe_b_00_10, pe_b_01_11, pe_b_02_12, pe_b_10_20, pe_b_11_21, pe_b_12_22;
@@ -45,7 +41,6 @@ module systolic #(
   assign b01 = i_B[1 * W +: W];
   assign b02 = i_B[2 * W +: W];
 
-  // How about  
   PE #(.W(W)) PE00(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(a00),        .i_B(b00), .o_A(pe_a_00_01),.o_B(pe_b_00_10),.o_C(c00));
   PE #(.W(W)) PE01(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_00_01), .i_B(b01), .o_A(pe_a_01_12),.o_B(pe_b_01_11),.o_C(c01));
   PE #(.W(W)) PE02(.i_clk(i_clk),.i_rst(i_rst),.i_sync(i_sync),.i_en(i_en), .i_mode(i_mode), .i_A(pe_a_01_12), .i_B(b02), .o_A(),          .o_B(pe_b_02_12),.o_C(c02));
