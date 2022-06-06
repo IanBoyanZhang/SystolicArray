@@ -39,7 +39,7 @@ module control #(
   assign A_in = {a20_q, a10_q, a00};
   assign B_in = {b02_q, b01_q, b00};  
 
-  // fix the 
+  // 000 is the idle / standby state
   always @(posedge i_clk) begin
     if (i_rst) begin
       states <= 3'b000;
@@ -49,21 +49,37 @@ module control #(
     end
   end
 
+  always @(posedge i_clk) begin
+    if (~i_en) begin
+      states <= 3'b000;
+    end
+  end
+
   reg sync;
   
   always @(*) begin
-    if (next_states == 3'b101) begin
-      next_states = 3'b000;
+    if (next_states == 3'b100) begin
+      next_states = 3'b001;
       // Force to sync after computation
       sync = 1'b1;
     end else begin
-      next_states = states + 1;
+      next_states = states + 3'b001;
+      sync = 1'b0;
     end
   end
   
   always @(*) begin
     case (states)
       3'b000: begin
+	a00 = 0;
+	a10 = 0;
+	a20 = 0;
+
+	b00 = 0;
+	b01 = 0;
+	b02 = 0;
+      end
+      3'b001: begin
         a00 = i_A[    W - 1 : 0 * W];
         a10 = i_A[2 * W - 1 : 1 * W];
         a20 = i_A[3 * W - 1 : 2 * W];
@@ -73,7 +89,7 @@ module control #(
         b01 = i_B[2 * W - 1 : 1 * W];
         b02 = i_B[3 * W - 1 : 2 * W];
       end
-      3'b001: begin
+      3'b010: begin
         a00 = i_A[4 * W - 1 : 3 * W];
         a10 = i_A[5 * W - 1 : 4 * W];
         a20 = i_A[6 * W - 1 : 5 * W];
@@ -82,7 +98,7 @@ module control #(
         b01 = i_B[5 * W - 1 : 4 * W];
         b02 = i_B[6 * W - 1 : 5 * W];
       end
-      3'b010: begin
+      3'b011: begin
         a00 = i_A[7 * W - 1 : 6 * W];
         a10 = i_A[8 * W - 1 : 7 * W];
         a20 = i_A[9 * W - 1 : 8 * W];
