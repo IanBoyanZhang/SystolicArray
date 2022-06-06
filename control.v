@@ -41,25 +41,19 @@ module control #(
 
   // 000 is the idle / standby state
   always @(posedge i_clk) begin
-    if (i_rst) begin
+    if (i_rst | ~i_en) begin
       states <= 3'b000;
     end
-    else begin
+    else if (i_en) begin
       states <= next_states;
-    end
-  end
-
-  always @(posedge i_clk) begin
-    if (~i_en) begin
-      states <= 3'b000;
     end
   end
 
   reg sync;
   
   always @(*) begin
-    if (next_states == 3'b100) begin
-      next_states = 3'b001;
+    if (next_states == 3'b110) begin
+      next_states = 3'b000;
       // Force to sync after computation
       sync = 1'b1;
     end else begin
