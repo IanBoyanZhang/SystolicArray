@@ -9,7 +9,7 @@
 // row
 // 3 x 3
 module systolic #(
-  parameter W = 32,
+  parameter W = 16,
   parameter N = 3
 ) (
   input  wire                         i_clk,
