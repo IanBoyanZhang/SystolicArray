@@ -12,7 +12,7 @@ module matrix_mult_top (
     output reg done_multiply,
     output reg start_memory_transaction,
     input done_memory_transaction,
-    input mode
+    input i_mode
 );
 
     localparam W = 16;
@@ -41,14 +41,20 @@ module matrix_mult_top (
     //assign B_mat = input_registers[W * N * N +: 2 * W * N * N];
     assign B_mat = input_registers[2 * W * N * N - 1 : W * N * N];
     
+    reg mode, next_mode;
+    
     always @(posedge clk) begin
     	if(rst) begin
         	state <= 0;
             counter <= 0;
+            mode <= 0;
+            input_registers <= 0;
         end
         else begin
         	state <= next_state;
             counter <= next_counter;
+            mode <= next_mode;
+            input_registers <= next_input_registers;
         end
     end
     
@@ -62,13 +68,16 @@ module matrix_mult_top (
     always @(*) begin
     	next_state = state;
         next_counter = counter;
+        next_input_registers = input_registers;
+        next_base_pointer = base_pointer;
+    	next_mode = mode;
     
     	case (state)
              START: begin
             	if(start_multiply) begin
                 	next_state = LOAD0;
-                    base_pointer = address_in;
-                    mode_reg = mode;
+                    next_base_pointer = address_in;
+                    next_mode = i_mode;
                     next_counter = 0;
                 end
             end
@@ -217,7 +226,7 @@ module matrix_mult_top (
         .i_rst(rst),
         
         .i_en(mult_enable),
-        .i_mode(mode_reg),
+        .i_mode(i_mode),
         
         .i_A(A_mat),
         .i_B(B_mat),
