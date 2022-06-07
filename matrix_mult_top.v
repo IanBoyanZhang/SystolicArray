@@ -23,7 +23,7 @@ module matrix_mult_top (
     reg [4:0] counter;
     reg [4:0] next_counter;
 
-    reg mode_reg;
+	reg mode_reg;
     wire done_processing;
     reg mult_enable;
     //reg start_memory_transaction;
@@ -83,8 +83,63 @@ module matrix_mult_top (
             LOAD1: begin
             	if(done_memory_transaction) begin
                 	next_state = LOAD0;
-                    input_registers[counter * W +: (counter + 1) * W] = data_in; 
-                	next_counter = counter + 1;
+    
+                    case(counter)
+                    	0: begin
+                            input_registers[0 * W +: (0 + 1) * W] = data_in;
+                        end
+                        1: begin
+                            input_registers[1 * W +: (1 + 1) * W] = data_in;
+                        end
+                        2: begin
+                            input_registers[2 * W +: (2 + 1) * W] = data_in;
+                        end
+                        3: begin
+                            input_registers[3 * W +: (3 + 1) * W] = data_in;
+                        end
+                        4: begin
+                            input_registers[4 * W +: (4 + 1) * W] = data_in;
+                        end
+                        5: begin
+                            input_registers[5 * W +: (5 + 1) * W] = data_in;
+                        end
+                        6: begin
+                            input_registers[6 * W +: (6 + 1) * W] = data_in;
+                        end
+                        7: begin
+                            input_registers[7 * W +: (7 + 1) * W] = data_in;
+                        end
+                        8: begin
+                            input_registers[8 * W +: (8 + 1) * W] = data_in;
+                        end
+                        9: begin
+                            input_registers[9 * W +: (9 + 1) * W] = data_in;
+                        end
+                        10: begin
+                            input_registers[10 * W +: (10 + 1) * W] = data_in;
+                        end
+                        11: begin
+                            input_registers[11 * W +: (11 + 1) * W] = data_in;
+                        end
+                        12: begin
+                            input_registers[12 * W +: (12 + 1) * W] = data_in;
+                        end
+                        13: begin
+                            input_registers[13 * W +: (13 + 1) * W] = data_in;
+                        end
+                        14: begin
+                            input_registers[14 * W +: (14 + 1) * W] = data_in;
+                        end
+                        15: begin
+                            input_registers[15 * W +: (15 + 1) * W] = data_in;
+                        end
+                        16: begin
+                            input_registers[16 * W +: (16 + 1) * W] = data_in;
+                        end
+                        17: begin
+                            input_registers[17 * W +: (17 + 1) * W] = data_in;
+                        end
+                    endcase
                 end
             end
             PROCESS: begin
