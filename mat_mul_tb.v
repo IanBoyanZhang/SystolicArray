@@ -23,6 +23,7 @@ module verification();
   integer iter_cnt;
   
   wire [W - 1 : 0] o_d_a00;
+  wire o_done;
   // clock generation
   always #(clock_period/2) clk <= ~clk;
   
@@ -83,6 +84,7 @@ module verification();
     .i_A(A_mat),
     .i_B(B_mat),
     .o_C(C_mat),
+    .o_done(o_done),
     // debug
     .o_d_a00(o_d_a00)
   );
