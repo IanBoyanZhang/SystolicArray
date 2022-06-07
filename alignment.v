@@ -1,3 +1,6 @@
+`ifndef ALIGNMENT_V_
+`define ALIGNMENT_V_
+
 `include "cla_nbit.v"
 `timescale 1ns / 1ps
 
@@ -17,3 +20,4 @@ module alignment (
   cla_nbit #(.n(5)) u1(bigger_exponent,~smaller_exponent+1'b1,1'b0,shift_bits,c1);
 
 endmodule
+`endif
