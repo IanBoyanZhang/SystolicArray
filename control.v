@@ -20,6 +20,7 @@ module control #(
   input  wire [    W * N * N - 1 : 0] i_A,
   input  wire [    W * N * N - 1 : 0] i_B,
   output wire [    W * N * N - 1 : 0] o_C,
+  output wire                         o_done,
   // debug
   output wire [    W - 1 : 0] o_d_a00
 );
@@ -28,7 +29,8 @@ module control #(
 
   wire [W * N - 1 : 0] A_in;
   wire [W * N - 1 : 0] B_in;
-
+ 
+  reg sync;
 
   reg  [W - 1 : 0] a00, a10, a20;
   wire [W - 1 : 0] a10_q, a20_q;
@@ -43,9 +45,11 @@ module control #(
   always @(posedge i_clk) begin
     if (i_rst | ~i_en) begin
       states <= 3'b000;
+      sync = 1'b1;
     end
     else if (i_en) begin
       states <= next_states;
+      sync = 1'b0;
     end
   end
 
@@ -53,14 +57,14 @@ module control #(
   
   always @(*) begin
     if (next_states == 3'b111) begin
-      next_states = 3'b000;
-      // Force to sync after computation
-      sync = 1'b1;
+      // Done: Force waiting
+      next_states = 3'b111;
     end else begin
       next_states = states + 3'b001;
-      sync = 1'b0;
     end
   end
+
+  assign o_done = (states == 3'b111);	
   
   always @(*) begin
     case (states)
