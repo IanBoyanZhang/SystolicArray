@@ -52,7 +52,7 @@ module control #(
   reg sync;
   
   always @(*) begin
-    if (next_states == 3'b110) begin
+    if (next_states == 3'b111) begin
       next_states = 3'b000;
       // Force to sync after computation
       sync = 1'b1;
@@ -64,15 +64,6 @@ module control #(
   
   always @(*) begin
     case (states)
-      3'b000: begin
-	a00 = 0;
-	a10 = 0;
-	a20 = 0;
-
-	b00 = 0;
-	b01 = 0;
-	b02 = 0;
-      end
       3'b001: begin
         a00 = i_A[    W - 1 : 0 * W];
         a10 = i_A[2 * W - 1 : 1 * W];
@@ -102,6 +93,13 @@ module control #(
         b02 = i_B[9 * W - 1 : 8 * W];
       end
       default: begin
+	a00 = 0;
+	a10 = 0;
+	a20 = 0;
+	      
+	b00 = 0;
+	b01 = 0;
+	b02 = 0;
       end
     endcase
   end
