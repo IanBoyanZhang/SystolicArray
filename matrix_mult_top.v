@@ -1,3 +1,4 @@
+`include "control.v"
 module matrix_mult_top (
 	input clk,
     input rst,
@@ -11,9 +12,13 @@ module matrix_mult_top (
     output done_multiply,
     input start_memory_transaction,
     output done_memory_transaction,
-    input mode,
-)
-	reg [2:0] state;
+    input mode
+);
+
+    localparam W = 16;
+    localparam N = 3;
+ 
+    reg [2:0] state;
     reg [4:0] counter;
 
 	reg mode_reg;
@@ -21,13 +26,15 @@ module matrix_mult_top (
     
     reg [31:0] base_pointer;
     
-    wire [0 +: 2 * W * N * N] input_registers;
+    //wire [0 +: 2 * W * N * N] input_registers;
+    wire [2 * W * N * N - 1 : 0] input_registers;
    
-    wire [0 +: W * N * N] A_mat, B_mat;
-    reg [0 +: W * N * N] C_mat_reg;
+    wire [W * N * N - 1 : 0] A_mat, B_mat;
+    reg [W * N * N - 1 : 0] C_mat_reg;
     
-    assign A_mat = input_registers[0 +: W * N * N];
-    assign B_mat = input_registers[W * N * N +: 2 * W * N * N];
+    assign A_mat = input_registers[W * N * N - 1 : 0];
+    //assign B_mat = input_registers[W * N * N +: 2 * W * N * N];
+    assign B_mat = input_registers[2 * W * N * N - 1 : W * N * N];
     
     always @(posedge clk) begin
     	if(rst) begin
@@ -49,10 +56,7 @@ module matrix_mult_top (
     
     always @(*) begin
     	case (state)
-        	next_state = state;
-            next_counter = counter;
-        
-        	START: begin
+             START: begin
             	if(start_multiply) begin
                 	next_state = LOAD0;
                     base_pointer = address_in;
@@ -106,10 +110,15 @@ module matrix_mult_top (
                 	next_counter = counter + 1;
                 end
             end
+	    default: begin
+		next_state = state;
+            	next_counter = counter;
+	    end
         endcase
     end
     
-	control matrix_mult_inner(
+        // only valid N == 3
+	control #(.W(W), .N(3)) matrix_mult_inner(
     	.i_clk(clk),
         .i_rst(rst),
         
@@ -121,6 +130,6 @@ module matrix_mult_top (
         .o_C(C_mat_reg),
         
         .o_done(done_processing)
-    )
+    );
 
 endmodule
