@@ -10,8 +10,8 @@ module matrix_mult_top (
     output reg [31:0] data_out,
     input start_multiply,
     output reg done_multiply,
-    input start_memory_transaction,
-    output reg done_memory_transaction,
+    output reg start_memory_transaction,
+    input done_memory_transaction,
     input mode
 );
 
