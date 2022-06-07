@@ -1,3 +1,5 @@
+`ifndef MUL_4x4_V_
+`define MUL_4x4_V_
 `include "mul2x2.v"
 
 `timescale 1ns / 1ps
@@ -25,3 +27,4 @@ module mul4x4(
   assign c[1:0] = tmp1[1:0];
 
 endmodule
+`endif
