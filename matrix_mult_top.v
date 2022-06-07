@@ -1,10 +1,7 @@
 `include "control.v"
 module matrix_mult_top (
-	input clk,
+    input clk,
     input rst,
-    
-    
-    input [31:0] address_in,
     input [31:0] address_in,
     output reg [31:0] address_out,
     input [31:0] data_in,
