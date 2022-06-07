@@ -5,6 +5,9 @@
 
 // Function : mac_out = in_a * in_b + in_c.  Both work for INT8 and FP16 mode. Default INT8 and FP16 are signed number
 // Exception : error detection for overflow and underflow in FP16 mode
+`ifndef MAC_UNIT_V_
+`define MAC_UNIT_V_
+
 `include "int_fp_add.v"
 `include "int_fp_mul.v"
 
@@ -50,3 +53,4 @@ module mac_unit
   );
 
 endmodule
+`endif
