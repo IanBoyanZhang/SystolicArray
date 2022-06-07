@@ -1,14 +1,16 @@
 `include "control.v"
 module matrix_mult_top (
-    input clk,
+	input clk,
     input rst,
+    
+    
     input [31:0] address_in,
     output reg [31:0] address_out,
     input [31:0] data_in,
     output reg [31:0] data_out,
     input start_multiply,
     output reg done_multiply,
-    input reg start_memory_transaction,
+    input start_memory_transaction,
     output reg done_memory_transaction,
     input mode
 );
@@ -16,11 +18,16 @@ module matrix_mult_top (
     localparam W = 16;
     localparam N = 3;
  
-    reg [2:0] state, next_state;
-    reg [4:0] counter, next_counter;
+    reg [2:0] state;
+    reg [2:0] next_state;
+    reg [4:0] counter;
+    reg [4:0] next_counter;
 
 	reg mode_reg;
     wire done_processing;
+    reg done_multiply;
+    reg mult_enable;
+    //reg start_memory_transaction;
     
     reg [31:0] base_pointer;
     
