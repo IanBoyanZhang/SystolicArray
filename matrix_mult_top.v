@@ -31,6 +31,7 @@ module matrix_mult_top (
    
     wire [W * N * N - 1 : 0] A_mat, B_mat;
     reg [W * N * N - 1 : 0] C_mat_reg;
+    wire [W * N * N - 1 : 0] C_mat;
     
     assign A_mat = input_registers[W * N * N - 1 : 0];
     //assign B_mat = input_registers[W * N * N +: 2 * W * N * N];
@@ -85,7 +86,7 @@ module matrix_mult_top (
             PROCESS: begin
             	next_counter = 0;
                 if(done_processing) begin
-                	c_mat_reg = c_mat;
+                	C_mat_reg = C_mat;
                 	next_state = STORE0;
                     mult_enable = 0;
                 end
@@ -106,7 +107,7 @@ module matrix_mult_top (
             STORE1: begin
             	if(done_memory_transaction) begin
                 	next_state = STORE0;
-                    data_out = c_mat[counter * W +: (counter + 1) * W]; 
+                    data_out = C_mat[counter * W +: (counter + 1) * W]; 
                 	next_counter = counter + 1;
                 end
             end
@@ -127,7 +128,7 @@ module matrix_mult_top (
         
         .i_A(A_mat),
         .i_B(B_mat),
-        .o_C(C_mat_reg),
+        .o_C(C_mat),
         
         .o_done(done_processing)
     );
