@@ -1,3 +1,6 @@
+`ifndef MUL_NORMALIZER_V_
+`define MUL_NORMALIZER_V_
+
 `timescale 1ns / 1ps
 
 module mul_normalizer (
@@ -16,3 +19,4 @@ module mul_normalizer (
 // No rounding and No overflow/underflow detection
 
 endmodule
+`endif
