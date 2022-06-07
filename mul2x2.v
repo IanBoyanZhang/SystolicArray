@@ -1,3 +1,6 @@
+`ifndef MUL_2x2_V_
+`define MUL_2x2_V_
+
 `timescale 1ns / 1ps
 
 module mul2x2(
@@ -15,3 +18,4 @@ module mul2x2(
   assign c 	= {tmp[3],tmp[2],tmp[1],tmp[0]};
 
 endmodule
+`endif
