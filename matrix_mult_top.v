@@ -140,6 +140,8 @@ module matrix_mult_top (
                             input_registers[17 * W +: (17 + 1) * W] = data_in;
                         end
                     endcase
+                    
+                    next_counter = counter + 1;
                 end
             end
             PROCESS: begin
@@ -166,7 +168,36 @@ module matrix_mult_top (
             STORE1: begin
             	if(done_memory_transaction) begin
                 	next_state = STORE0;
-                    data_out = C_mat[counter * W +: (counter + 1) * W]; 
+                    case(counter)
+                    	0: begin
+                            data_out = C_mat[0 * W +: (0 + 1) * W];
+                        end
+                        1: begin
+                            data_out = C_mat[1 * W +: (1 + 1) * W];
+                        end
+                        2: begin
+                            data_out = C_mat[2 * W +: (2 + 1) * W];
+                        end
+                        3: begin
+                            data_out = C_mat[3 * W +: (3 + 1) * W];
+                        end
+                        4: begin
+                            data_out = C_mat[4 * W +: (4 + 1) * W];
+                        end
+                        5: begin
+                            data_out = C_mat[5 * W +: (5 + 1) * W];
+                        end
+                        6: begin
+                            data_out = C_mat[6 * W +: (6 + 1) * W];
+                        end
+                        7: begin
+                            data_out = C_mat[7 * W +: (7 + 1) * W];
+                        end
+                        8: begin
+                            data_out = C_mat[8 * W +: (8 + 1) * W];
+                        end
+                    endcase
+                    // data_out = C_mat[counter * W +: (counter + 1) * W]; 
                 	next_counter = counter + 1;
                 end
             end
