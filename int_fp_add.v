@@ -1,3 +1,6 @@
+`ifndef INT_FP_ADD_V_
+`define INT_FP_ADD_V_
+
 `include "alignment.v"
 `include "add_normalizer.v"
 
@@ -93,3 +96,4 @@ module int_fp_add (
 `endif
 
 endmodule
+`endif
