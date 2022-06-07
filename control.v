@@ -52,8 +52,6 @@ module control #(
       sync = 1'b0;
     end
   end
-
-  reg sync;
   
   always @(*) begin
     if (next_states == 3'b111) begin
