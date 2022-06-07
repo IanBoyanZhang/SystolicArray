@@ -20,9 +20,7 @@ module control #(
   input  wire [    W * N * N - 1 : 0] i_A,
   input  wire [    W * N * N - 1 : 0] i_B,
   output wire [    W * N * N - 1 : 0] o_C,
-  output wire                         o_done,
-  // debug
-  output wire [    W - 1 : 0] o_d_a00
+  output wire                         o_done
 );
   
   reg [2 : 0] states, next_states;
@@ -106,9 +104,7 @@ module control #(
     endcase
   end
 
-  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), .i_mode(i_mode), .i_sync(sync), .i_A(A_in), .i_B(B_in), .o_C(o_C),
-                               .d_a00(o_d_a00)
-                              );
+  systolic #(.W(W), .N(N)) sys(.i_clk(i_clk), .i_rst(i_rst), .i_en(i_en), .i_mode(i_mode), .i_sync(sync), .i_A(A_in), .i_B(B_in), .o_C(o_C));
 
   delay2 #(.WIDTH(W), .DEPTH(1)) delayA1(.clk(i_clk), .reset(i_rst), .data_in(a10), .data_out(a10_q));
   delay2 #(.WIDTH(W), .DEPTH(2)) delayA2(.clk(i_clk), .reset(i_rst), .data_in(a20), .data_out(a20_q));
