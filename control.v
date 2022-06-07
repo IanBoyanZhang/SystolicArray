@@ -10,7 +10,7 @@
 // Really 3x3, a done output??
 
 module control #(
-  parameter W = 32,
+  parameter W = 16,
   parameter N = 3
 ) (
   input  wire                         i_clk,
