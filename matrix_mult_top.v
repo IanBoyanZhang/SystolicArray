@@ -60,6 +60,9 @@ module matrix_mult_top (
     localparam STORE1 = 5;
     
     always @(*) begin
+    	next_state = state;
+        next_counter = counter;
+    
     	case (state)
              START: begin
             	if(start_multiply) begin
