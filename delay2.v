@@ -5,7 +5,7 @@
 `default_nettype none
 
 module delay2 #(
-  parameter WIDTH = 32,
+  parameter WIDTH = 16,
   parameter DEPTH = 3
 ) (
   input  wire                 clk,
