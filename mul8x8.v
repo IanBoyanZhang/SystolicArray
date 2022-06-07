@@ -1,3 +1,5 @@
+`ifndef MUL_8x8_V_
+`define MUL_8x8_V_
 `include "mul4x4.v"
 
 `timescale 1ns / 1ps
@@ -25,3 +27,4 @@ module mul8x8(
   assign c[3:0] = tmp1[3:0];
 
 endmodule
+`endif
