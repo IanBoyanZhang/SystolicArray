@@ -5,13 +5,14 @@ module matrix_mult_top (
     
     
     input [31:0] address_in,
-    output [31:0] address_out,
+    input [31:0] address_in,
+    output reg [31:0] address_out,
     input [31:0] data_in,
-    output [31:0] data_out,
+    output reg [31:0] data_out,
     input start_multiply,
-    output done_multiply,
+    output reg done_multiply,
     input reg start_memory_transaction,
-    output done_memory_transaction,
+    output reg done_memory_transaction,
     input mode
 );
 
