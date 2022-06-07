@@ -1,3 +1,6 @@
+`ifndef ADD_NORMALIZER_V_
+`define ADD_NORMALIZER_V_
+
 `timescale 1ns / 1ps
 
 module add_normalizer (
@@ -55,3 +58,5 @@ module add_normalizer (
   cla_nbit #(.n(5)) u1(exponent,~number_of_zero_lead+1'b1,1'b0,shift_left_exp,c1);
 
 endmodule
+
+`endif
