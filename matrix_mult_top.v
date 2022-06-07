@@ -79,7 +79,7 @@ module matrix_mult_top (
             LOAD1: begin
             	if(done_memory_transaction) begin
                 	next_state = LOAD0;
-                    inputs_registers[counter * W +: (counter + 1) * W] = data_in; 
+                    input_registers[counter * W +: (counter + 1) * W] = data_in; 
                 	next_counter = counter + 1;
                 end
             end
