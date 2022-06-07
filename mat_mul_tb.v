@@ -51,30 +51,30 @@ module verification();
    
     clk      = 1'b0;
     reset    = 1'b1;
-    #(10 * clock_period);
+    #(3 * clock_period);
     #(clock_period) reset = 0; en = 0;
     #(clock_period) reset = 0; en = 1;
-    
 
-    #(60 * clock_period);
     en = 0;
+    #(20 * clock_period);
+    $finish;
   end
   
   always @(posedge clk) begin
     iter_cnt <= iter_cnt + 1;
   end
   
-  always @(iter_cnt) begin
-    /*if (iter_cnt > 100) begin
+  /*always @(iter_cnt) begin
+    if (iter_cnt > 100) begin
       assert_1 : assert (C_mat != 32'b0);
     end
-    */
     if (iter_cnt >= 350) begin
       $stop;
       $finish;
     end
   end
-  
+  */
+
   control #(.W(W), .N(N)) control_unit(
     .i_clk(clk),
     .i_rst(reset),
