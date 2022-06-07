@@ -10,7 +10,7 @@ module matrix_mult_top (
     output [31:0] data_out,
     input start_multiply,
     output done_multiply,
-    input start_memory_transaction,
+    input reg start_memory_transaction,
     output done_memory_transaction,
     input mode
 );
@@ -18,8 +18,8 @@ module matrix_mult_top (
     localparam W = 16;
     localparam N = 3;
  
-    reg [2:0] state;
-    reg [4:0] counter;
+    reg [2:0] state, next_state;
+    reg [4:0] counter, next_counter;
 
 	reg mode_reg;
     wire done_processing;
