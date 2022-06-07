@@ -1,3 +1,6 @@
+`ifndef INT_FP_MUL_V_
+`define INT_FP_MUL_V_
+
 `include "mul16x16.v"
 `include "mul_normalizer.v"
 
@@ -66,3 +69,4 @@ module int_fp_mul (
   mul_normalizer u4(biased_sum_exponent,mantissa_prod,normalized_out);
 
 endmodule
+`endif
