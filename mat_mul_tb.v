@@ -55,8 +55,8 @@ module verification();
     #(clock_period) reset = 0; en = 0;
     #(clock_period) reset = 0; en = 1;
 
-    en = 0;
     #(20 * clock_period);
+    en = 0;
     $finish;
   end
   
