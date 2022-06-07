@@ -19,9 +19,7 @@ module systolic #(
   input  wire                         i_mode,
   input  wire [        W * N - 1 : 0] i_A,
   input  wire [        W * N - 1 : 0] i_B,
-  output wire [    W * N * N - 1 : 0] o_C,
-  // debug output
-  output wire [W - 1 : 0] d_a00
+  output wire [    W * N * N - 1 : 0] o_C
 );
 
   //localparam O_VEC_WIDTH = 2 * W;
@@ -79,7 +77,5 @@ module systolic #(
   assign o_C[7 * O_VEC_WIDTH +: O_VEC_WIDTH] = c21;
   assign o_C[8 * O_VEC_WIDTH +: O_VEC_WIDTH] = c22;
   */
-  
-  assign d_a00 = a00;
 endmodule
 `endif
