@@ -31,7 +31,7 @@ module matrix_mult_top (
     reg [31:0] base_pointer;
     
     //wire [0 +: 2 * W * N * N] input_registers;
-    wire [2 * W * N * N - 1 : 0] input_registers;
+    reg [2 * W * N * N - 1 : 0] input_registers;
    
     wire [W * N * N - 1 : 0] A_mat, B_mat;
     reg [W * N * N - 1 : 0] C_mat_reg;
