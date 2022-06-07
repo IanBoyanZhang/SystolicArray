@@ -23,9 +23,8 @@ module matrix_mult_top (
     reg [4:0] counter;
     reg [4:0] next_counter;
 
-	reg mode_reg;
+    reg mode_reg;
     wire done_processing;
-    reg done_multiply;
     reg mult_enable;
     //reg start_memory_transaction;
     
