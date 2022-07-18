@@ -13,3 +13,13 @@ reg_la1_oenb = reg_la1_iena = 0x00000000;    // [63:32]
 reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
 reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 ```
+
+Actual la data line
+
+```c
+reg_la2_data
+```
+
+Management SoC -> Serial Transfer IO configuration
+
+
