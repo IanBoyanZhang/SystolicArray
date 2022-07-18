@@ -26,5 +26,7 @@ Management SoC -> Serial Transfer IO configuration
 Using wishbone or not
 
 ```verilog
+
+// ~ reduction, monadic, multiple bits
 assign la_write = ~la_oenb[63:32] & ~{BITS{valid}};
 ```
