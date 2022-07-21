@@ -24,7 +24,8 @@ module int_fp_add (
   // only used in INT8 MAC mode
   wire [4:0] higher_add,higher_a,higher_b;
 
-  wire [15:0] result;
+  reg  [15:0] result;
+  wire [15:0] fp_result;
   reg [14:0] bigger, smaller;
   reg a_larger_b;
 
@@ -76,6 +77,25 @@ module int_fp_add (
     assign adder_output_tmp = adder_output_reg[10:0];
 `endif
 
+  wire a_zero, b_zero;
+  
+  assign a_zero = ~(|a);
+  assign b_zero = ~(|b);
+
+  // Fix 0000 + 0000 == 0400 issue
+  always @(*) begin
+    if (a_zero) begin
+      result = b;
+    end else if (b_zero) begin
+      result = a;
+    end
+    else begin
+      result = fp_result;
+    end
+  end
+  
+  
+
 `ifdef PIPLINE
   // align small number
   alignment u1(bigger_tmp,smaller_tmp,aligned_small);
@@ -90,9 +110,9 @@ module int_fp_add (
   cla_nbit #(.n(5)) u3(higher_a,higher_b,c1,higher_add,c2);
 
 `ifdef PIPLINE
-  add_normalizer u4(c_sign,bigger[14:10],adder_output_tmp,result,c1,if_sub);
+  add_normalizer u4(c_sign,bigger[14:10],adder_output_tmp, fp_result,c1,if_sub);
 `else 
-  add_normalizer u4(c_sign,bigger[14:10],adder_output,result,c1,if_sub);
+  add_normalizer u4(c_sign,bigger[14:10],adder_output,fp_result,c1,if_sub);
 `endif
 
 endmodule
