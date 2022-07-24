@@ -32,6 +32,7 @@ module verification();
     $dumpvars(1);
     en = 0;
 
+    /*
     A_mat = {
         16'h0000, 16'h0000, 16'h3c00,
         16'h0000, 16'h0000, 16'h3c00,
@@ -43,6 +44,20 @@ module verification();
         16'h0000, 16'h0000, 16'h3c00,
         16'h0000, 16'h0000, 16'h3c00
     };
+    */
+
+    A_mat = {
+        16'h3c00, 16'h3c00, 16'h3c00,
+        16'h3c00, 16'h3c00, 16'h3c00,
+        16'h3c00, 16'h3c00, 16'h3c00
+    };
+
+    B_mat = {
+        16'h3c00, 16'h3c00, 16'h3c00,
+        16'h3c00, 16'h3c00, 16'h3c00,
+        16'h3c00, 16'h3c00, 16'h3c00
+    };
+
 
     iter_cnt = 0;
     mode = 1;
@@ -62,6 +77,11 @@ module verification();
   
   always @(posedge clk) begin
     iter_cnt <= iter_cnt + 1;
+    if (o_done) begin
+      en <= 0;
+      A_mat <= 0;
+      B_mat <= 0;
+    end
   end
   
   /*always @(iter_cnt) begin
@@ -75,6 +95,12 @@ module verification();
   end
   */
 
+  wire [W * N - 1 : 0] A_in;
+  wire [W * N - 1 : 0] B_in;
+
+  wire [W * N * 2 - 1 : 0] debug_pe_a;
+  wire [W * N * 2 - 1 : 0] debug_pe_b;
+
   control #(.W(W), .N(N)) control_unit(
     .i_clk(clk),
     .i_rst(reset),
@@ -83,6 +109,10 @@ module verification();
     .i_A(A_mat),
     .i_B(B_mat),
     .o_C(C_mat),
-    .o_done(o_done)
+    .o_done(o_done),
+    .A_in(A_in),
+    .B_in(B_in),
+    .debug_pe_a(debug_pe_a),
+    .debug_pe_b(debug_pe_b)
   );
 endmodule
