@@ -5,7 +5,7 @@
 `include "mul_normalizer.v"
 
 module int_fp_mul (
-`ifdef PIPLINE
+`ifdef PIPELINE
   input         clk,
   input         rst_n,
 `endif
@@ -42,7 +42,7 @@ module int_fp_mul (
   assign error = overflow | underflow; 
 
     
-`ifdef PIPLINE
+`ifdef PIPELINE
 
   reg [31:0] multiplier_output_tmp;
 
