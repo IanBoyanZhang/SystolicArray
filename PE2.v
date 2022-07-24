@@ -13,7 +13,6 @@ module PE #(
 ) (
   input  wire                 i_clk,
   input  wire                 i_rst,
-  input  wire                 i_sync,  // or load?
   input  wire                 i_en,
   input  wire                 i_mode,
   input  wire [    W - 1 : 0] i_A,
@@ -30,7 +29,7 @@ module PE #(
   wire sync_load;
   assign o_A = i_A_buffered;
   assign o_B = i_B_buffered;
-  assign sync_load = i_sync | i_rst | ~i_en;
+  assign sync_load = i_rst | ~i_en;
 
   wire [W - 1 : 0] i_A_buffered;
   wire [W - 1 : 0] i_B_buffered;
@@ -44,7 +43,7 @@ module PE #(
 
   always @(posedge i_clk) begin
     if (sync_load) begin
-      accu <= 1'b0;
+      accu <= 0;
       o_C  <= 0;
     end
     else begin
