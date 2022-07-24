@@ -7,7 +7,7 @@
 `timescale 1ns / 1ps
 
 module int_fp_add (
-`ifdef PIPLINE
+`ifdef PIPELINE
   input         clk,
   input         rst_n,
 `endif
@@ -28,7 +28,7 @@ module int_fp_add (
   reg [14:0] bigger, smaller;
   reg a_larger_b;
 
-`ifdef PIPLINE
+`ifdef PIPELINE
   reg [14:0] bigger_reg, smaller_reg;
   reg [10:0] adder_output_reg;
   wire [14:0] bigger_tmp, smaller_tmp;
@@ -59,7 +59,7 @@ module int_fp_add (
     end 
   end
 
-`ifdef PIPLINE 
+`ifdef PIPELINE 
     always @ (posedge clk or negedge rst_n) begin
       if (!rst_n) begin
         bigger_reg <= 15'b0;
@@ -76,7 +76,7 @@ module int_fp_add (
     assign adder_output_tmp = adder_output_reg[10:0];
 `endif
 
-`ifdef PIPLINE
+`ifdef PIPELINE
   // align small number
   alignment u1(bigger_tmp,smaller_tmp,aligned_small);
 `else 
@@ -89,7 +89,7 @@ module int_fp_add (
   // This 5 bit adder only used in INT8 MAC mode
   cla_nbit #(.n(5)) u3(higher_a,higher_b,c1,higher_add,c2);
 
-`ifdef PIPLINE
+`ifdef PIPELINE
   add_normalizer u4(c_sign,bigger[14:10],adder_output_tmp,result,c1,if_sub);
 `else 
   add_normalizer u4(c_sign,bigger[14:10],adder_output,result,c1,if_sub);
