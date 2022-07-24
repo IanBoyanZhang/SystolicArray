@@ -15,7 +15,7 @@
 
 module mac_unit
 (
-`ifdef PIPLINE
+`ifdef PIPELINE
   input            clk,
   input            rst_n,
 `endif
@@ -23,6 +23,7 @@ module mac_unit
   input     [15:0] in_b, // multiplier input2
   input     [15:0] in_c, // adder input2 ; adder input1 = in_a*in_b
   input 	   mode,
+  //output    [15:0] mac_out,
   output    [15:0] mac_out,
   output 	   error
 );
@@ -30,7 +31,7 @@ module mac_unit
   wire [15:0] mul_out;
 
   int_fp_add add(
-  `ifdef PIPLINE
+  `ifdef PIPELINE
     .clk   (clk    ),
     .rst_n (rst_n  ),
   `endif 
@@ -41,7 +42,7 @@ module mac_unit
   );
 
   int_fp_mul mul(
-  `ifdef PIPLINE
+  `ifdef PIPELINE
     .clk   (clk    ),
     .rst_n (rst_n  ),
   `endif 
