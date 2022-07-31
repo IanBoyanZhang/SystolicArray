@@ -2,7 +2,7 @@
 // or browse Examples
 
 // First attempt of formal verification
-`include "control.v"
+`include "mat_mul_generated.v"
 
 module verification();
   
