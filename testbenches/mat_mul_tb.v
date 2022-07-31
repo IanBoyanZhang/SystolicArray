@@ -95,9 +95,6 @@ module verification();
   end
   */
 
-  wire [W * N - 1 : 0] A_in;
-  wire [W * N - 1 : 0] B_in;
-
   wire [W * N * 2 - 1 : 0] debug_pe_a;
   wire [W * N * 2 - 1 : 0] debug_pe_b;
 
@@ -110,8 +107,6 @@ module verification();
     .i_B(B_mat),
     .o_C(C_mat),
     .o_done(o_done),
-    .A_in(A_in),
-    .B_in(B_in),
     .debug_pe_a(debug_pe_a),
     .debug_pe_b(debug_pe_b)
   );
