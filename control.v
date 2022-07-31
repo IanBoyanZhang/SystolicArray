@@ -23,8 +23,6 @@ module control #(
   input  wire [    W * N * N - 1 : 0] i_B,
   output wire [    W * N * N - 1 : 0] o_C,
   output wire                         o_done,
-  output wire [    W * N     - 1 : 0] A_in,
-  output wire [    W * N     - 1 : 0] B_in,
 
   // debug
   output wire [    W * N * 2 - 1 : 0] debug_pe_a,
@@ -39,6 +37,9 @@ module control #(
   reg  [W - 1 : 0] b00, b01, b02;
   wire [W - 1 : 0] b01_q, b02_q;
 
+  wire [W * N - 1 : 0] A_in;
+  wire [W * N - 1 : 0] B_in;
+	
   assign A_in = {a02_q, a01_q, a00};
   assign B_in = {b02_q, b01_q, b00};  
 
