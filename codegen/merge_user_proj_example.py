@@ -10,7 +10,7 @@ src_list = [
         'user_proj_example_cp.v'
 ]
 
-# TODO: Passing from cmd arguments which can be used by the makefile
+# TODO: From cmd arguments which can be used by the makefile
 concat_filepath = 'user_proj_example.v'
 
 with open(concat_filepath, 'w') as outfile:
