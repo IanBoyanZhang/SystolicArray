@@ -18,7 +18,7 @@ src_list = [
         'mul_normalizer.v'
 ]
 
-# TODO: Passing from cmd arguments which can be used by the makefile
+# TODO: From cmd arguments which can be used by the makefile
 concat_filepath = 'mat_mul_generated.v'
 
 with open(concat_filepath, 'w') as outfile:
