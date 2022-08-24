@@ -54,7 +54,8 @@ module control #(
   end
   
   always @(*) begin
-    if (next_states == 4'b1001) begin
+    // avoid looping logic
+    if (states == 4'b1001) begin
       // Done: Force waiting
       // This can also be done by switching off input
       next_states = 4'b1001;
