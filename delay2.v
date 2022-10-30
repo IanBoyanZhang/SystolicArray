@@ -43,7 +43,7 @@ module dff#(
   );
 
   always @(posedge clk) begin
-    outp <= rst ? 0 : inp;
+    outp <= rst ? {WIDTH{1'b0}} : inp;
   end
 
 endmodule
