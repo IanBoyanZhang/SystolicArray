@@ -39,7 +39,7 @@ module control #(
 
   wire [W * N - 1 : 0] A_in;
   wire [W * N - 1 : 0] B_in;
-	
+
   assign A_in = {a02_q, a01_q, a00};
   assign B_in = {b02_q, b01_q, b00};  
 

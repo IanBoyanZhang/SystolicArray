@@ -1,9 +1,7 @@
 `include "control.v"
 module matrix_mult_top (
-	input clk,
+    input clk,
     input rst,
-    
-    
     input [31:0] address_in,
     output reg [31:0] address_out,
     input [31:0] data_in,
@@ -23,9 +21,9 @@ module matrix_mult_top (
     reg [4:0] counter;
     reg [4:0] next_counter;
 
-	reg mode_reg;
+    reg  mode_reg;
     wire done_processing;
-    reg mult_enable;
+    reg  mult_enable;
     //reg start_memory_transaction;
     
     reg [31:0] base_pointer;
@@ -34,7 +32,7 @@ module matrix_mult_top (
     reg [2 * W * N * N - 1 : 0] input_registers;
    
     wire [W * N * N - 1 : 0] A_mat, B_mat;
-    reg [W * N * N - 1 : 0] C_mat_reg;
+    reg  [W * N * N - 1 : 0] C_mat_reg;
     wire [W * N * N - 1 : 0] C_mat;
     
     assign A_mat = input_registers[W * N * N - 1 : 0];
@@ -45,13 +43,13 @@ module matrix_mult_top (
     
     always @(posedge clk) begin
     	if(rst) begin
-        	state <= 0;
+            state <= 0;
             counter <= 0;
             mode <= 0;
             input_registers <= 0;
         end
         else begin
-        	state <= next_state;
+            state <= next_state;
             counter <= next_counter;
             mode <= next_mode;
             input_registers <= next_input_registers;
@@ -75,7 +73,7 @@ module matrix_mult_top (
     	case (state)
              START: begin
             	if(start_multiply) begin
-                	next_state = LOAD0;
+                    next_state = LOAD0;
                     next_base_pointer = address_in;
                     next_mode = i_mode;
                     next_counter = 0;
@@ -84,17 +82,17 @@ module matrix_mult_top (
          
             LOAD0: begin
             	if(counter >= 2 * N * N) begin
-                	next_state = PROCESS;
+                    next_state = PROCESS;
                 end
                 else begin
-            		start_memory_transaction = 1;
-                	address_out = base_pointer + (4 * counter) + 0;
-            		next_state = LOAD1;
+		    start_memory_transaction = 1;
+                    address_out = base_pointer + (4 * counter) + 0;
+		    next_state = LOAD1;
                 end
             end
             LOAD1: begin
             	if(done_memory_transaction) begin
-                	next_state = LOAD0;
+                    next_state = LOAD0;
     
                     case(counter)
                     	0: begin
@@ -159,8 +157,8 @@ module matrix_mult_top (
             PROCESS: begin
             	next_counter = 0;
                 if(done_processing) begin
-                	C_mat_reg = C_mat;
-                	next_state = STORE0;
+                    C_mat_reg = C_mat;
+                    next_state = STORE0;
                     mult_enable = 0;
                 end
             end
@@ -168,18 +166,18 @@ module matrix_mult_top (
                 done_multiply = 1;
 				
                 if(counter >= N * N) begin
-                	next_state = START;
+                    next_state = START;
                 end
                 else begin
-            		start_memory_transaction = 1;
-                	address_out = base_pointer + (4 * counter) + 0;
-            		next_state = STORE1;
+		    start_memory_transaction = 1;
+		    address_out = base_pointer + (4 * counter) + 0;
+		    next_state = STORE1;
                 end
             	
             end
             STORE1: begin
             	if(done_memory_transaction) begin
-                	next_state = STORE0;
+                    next_state = STORE0;
                     case(counter)
                     	0: begin
                             data_out = C_mat[0 * W +: W];
@@ -210,7 +208,7 @@ module matrix_mult_top (
                         end
                     endcase
                     // data_out = C_mat[counter * W +: (counter + 1) * W]; 
-                	next_counter = counter + 1;
+                    next_counter = counter + 1;
                 end
             end
 	    default: begin
@@ -220,8 +218,8 @@ module matrix_mult_top (
         endcase
     end
     
-        // only valid N == 3
-	control #(.W(W), .N(3)) matrix_mult_inner(
+   // only valid N == 3
+   control #(.W(W), .N(3)) matrix_mult_inner(
     	.i_clk(clk),
         .i_rst(rst),
         
