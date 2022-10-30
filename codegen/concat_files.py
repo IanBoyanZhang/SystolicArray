@@ -4,7 +4,7 @@ src_list = [
         'add_normalizer.v',
         'control.v',
         'mac_unit.v',
-        'PE2.v',
+        'PE.v',
         'delay2.v',
         'mul2x2.v',
         'mul4x4.v',

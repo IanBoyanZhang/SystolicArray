@@ -18,6 +18,7 @@ module cla_nbit #(
 
   wire [n-1:0] g;
   wire [n-1:0] p;
+
   /* verilator lint_off UNOPTFLAT */
   wire [  n:0] c;
   /* verilator lint_on  UNOPTFLAT */
@@ -25,13 +26,15 @@ module cla_nbit #(
   assign c[0] = ci;
   assign co   = c[n];
 
+  assign g[n - 1:0] = a[n - 1 : 0] & b[n - 1:0];
+  assign p[n - 1:0] = a[n - 1 : 0] | b[n - 1:0];
+  assign s[n - 1:0] = a[n - 1 : 0] ^ b[n - 1:0] ^ c[n - 1 : 0];
+
   genvar i;  /* i - generate index variable */
 
   generate
     for (i = 0; i < n; i = i + 1) begin : addbit
-      assign s[i] = a[i] ^ b[i] ^ c[i];
-      assign g[i] = a[i] & b[i];
-      assign p[i] = a[i] | b[i];
+      // https://www.embecosm.com/appnotes/ean6/html/ch07s02s07.html
       assign c[i + 1] = g[i] | (p[i] & c[i]);
     end
   endgenerate

@@ -1,5 +1,5 @@
-`ifndef PE_2_V_
-`define PE_2_V_
+`ifndef PE_V_
+`define PE_V_
 
 `include "mac_unit.v"
 `include "delay2.v"
@@ -20,7 +20,8 @@ module PE #(
   output wire [    W - 1 : 0] o_A,
   output wire [    W - 1 : 0] o_B,
   //output wire [    W - 1 : 0] o_C
-  output reg  [    W - 1 : 0] o_C
+  output reg  [    W - 1 : 0] o_C,
+  output wire                 o_error
 );
 
   //wire mode;
@@ -58,7 +59,8 @@ module PE #(
     .in_b    (i_B_buffered),
     .in_c    (accu),
     .mode    (i_mode),
-    .mac_out (mac_out)
+    .mac_out (mac_out),
+    .error   (o_error)
   );
 
 endmodule
